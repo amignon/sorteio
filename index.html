@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#B20D24">
+  <meta name="description" content="Ferramenta de sorteio de ordem de apresentações">
+  <title>Sorteio de apresentações</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="alunos.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main class="shell">
+    <header class="header">
+      <div class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 7h14M5 12h14M5 17h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="18" cy="17" r="2" fill="currentColor"/></svg></div>
+      <div><p class="eyebrow">APRESENTAÇÕES</p><h1>Organização da turma</h1></div>
+    </header>
+    <div class="content">
+      <section id="view-sorteio" class="panel" aria-labelledby="heading-sorteio">
+        <div class="section-heading"><div><p class="overline">SORTEIO</p><h2 id="heading-sorteio">Próxima apresentação</h2><p class="muted">Selecione aleatoriamente um aluno disponível.</p></div><span class="round-badge" id="badge-disponiveis">0 disponíveis</span></div>
+        <div class="draw-area" aria-live="polite">
+          <span class="draw-label">ALUNO SORTEADO</span>
+          <div class="draw-name" id="nome-sorteado">Nenhum aluno sorteado</div>
+          <p class="draw-prompt" id="pergunta">Clique no botão para iniciar o sorteio.</p>
+          <div id="botoes-iniciais"><button class="btn btn-primary btn-full" id="sortear" type="button"><span aria-hidden="true">⤨</span> Sortear aluno</button></div>
+          <div id="botoes-decisao" class="decision-buttons" hidden>
+            <button class="btn btn-primary" id="apresentar" type="button">✓ Pode apresentar</button>
+            <button class="btn btn-outline" id="esperar" type="button">⏳ Colocar em espera</button>
+            <button class="btn btn-ghost" id="cancelar" type="button">Cancelar sorteio</button>
+          </div>
+        </div>
+        <p class="notice" id="aviso" role="status" aria-live="polite"></p>
+        <div class="subheading"><h3>Alunos disponíveis</h3><span class="count" id="total-disponiveis">0</span></div>
+        <div id="lista-disponiveis" class="names-list"></div>
+        <div class="footer-actions"><button class="btn btn-reset" type="button" id="reiniciar">↻ Reiniciar sorteio</button></div>
+      </section>
+      <section id="view-resumo" class="panel" aria-labelledby="heading-resumo" hidden>
+        <div class="section-heading"><div><p class="overline">ACOMPANHAMENTO</p><h2 id="heading-resumo">Resumo da turma</h2><p class="muted">Situação atual de cada aluno.</p></div></div>
+        <div class="stats"><div class="stat"><strong id="stat-disponiveis">0</strong><span>Disponíveis</span></div><div class="stat"><strong id="stat-espera">0</strong><span>Em espera</span></div><div class="stat"><strong id="stat-apresentaram">0</strong><span>Apresentaram</span></div></div>
+        <div class="list-card"><div class="subheading"><h3>Disponíveis</h3><span class="count" id="count-d">0</span></div><div class="names-list" id="resumo-disponiveis"></div></div>
+        <div class="list-card"><div class="subheading"><h3>Em espera</h3><span class="count" id="count-e">0</span></div><div class="names-list" id="resumo-espera"></div></div>
+        <div class="list-card"><div class="subheading"><h3>Já apresentaram</h3><span class="count" id="count-a">0</span></div><div class="names-list" id="resumo-apresentaram"></div></div>
+      </section>
+      <section id="view-alunos" class="panel" aria-labelledby="heading-alunos" hidden>
+        <div class="section-heading"><div><p class="overline">TURMA</p><h2 id="heading-alunos">Lista de alunos</h2><p class="muted">Cole os nomes abaixo, colocando um aluno em cada linha.</p></div></div>
+        <label class="input-label" for="entrada-alunos">Nomes dos alunos</label>
+        <textarea id="entrada-alunos" class="student-input" rows="11" spellcheck="false" placeholder="Ana Silva&#10;Bruno Souza&#10;Camila Oliveira"></textarea>
+        <div class="entry-footer"><span id="contador-nomes" class="muted">0 alunos</span><button id="carregar-alunos" type="button" class="btn btn-primary">Carregar lista</button></div>
+        <p id="aviso-alunos" class="notice notice-left" role="status" aria-live="polite"></p>
+        <p class="input-tip">Ao carregar uma nova lista, um novo sorteio começa. A lista e o andamento são salvos neste navegador.</p>
+      </section>
+    </div>
+  </main>
+  <nav class="bottom-tabs" aria-label="Navegação principal">
+    <button type="button" class="tab active" data-tab="sorteio" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h3c5 0 5 10 10 10h3M17 14l3 3-3 3M4 17h3c2 0 3-2 4-4M14 9c1-1 2-2 3-2h3M17 4l3 3-3 3"/></svg><span>Sorteio</span></button>
+    <button type="button" class="tab" data-tab="resumo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg><span>Resumo</span></button>
+    <button type="button" class="tab" data-tab="alunos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 5h16M4 10h16M4 15h16M4 20h10"/></svg><span>Alunos</span></button>
+  </nav>
+  <dialog id="modal-reinicio" aria-labelledby="modal-titulo"><form method="dialog"><h2 id="modal-titulo">Reiniciar sorteio?</h2><p>Todos os alunos voltarão à lista inicial. As listas de espera e apresentações serão apagadas.</p><div class="modal-actions"><button type="submit" class="btn btn-outline" value="cancel">Voltar</button><button type="submit" class="btn btn-primary" value="confirmar">Sim, reiniciar</button></div></form></dialog>
+</body>
+</html>
